@@ -2,7 +2,7 @@
 <widget id="com.myapp.mobile" version="2.25" xmlns="http://www.w3.org/ns/widgets">
   <name>inTime</name>
   <description>inTime Musician's Practice Shceduler</description>
-  <preference name="phonegap-version" value="cli-6.3.0" />
+  <preference name='phonegap-version' value='cli-5.2.0' />
   <preference name="permissions" value="none" />
   <preference name="orientation" value="portrait" />
   <preference name="target-device" value="universal" />
@@ -13,8 +13,8 @@
   <plugin name="cordova-plugin-splashscreen" spec="3.2.2" />
 
   <icon src="music.jpg" />
-  <gap:plugin name="cordova-plugin-whitelist" source="npm" />
-  <access origin="*" />
-  <allow-intent href="*" />
-  <allow-navigation href="*" />
+  <access origin="*" launch-external="yes" />
+  <allow-intent href="http://*/*" />
+  <allow-intent href="https://*/*" />
+
 </widget>
