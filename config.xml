@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.myapp.mobile" version="2.25" xmlns="http://www.w3.org/ns/widgets">
-  <name>My Amazing App</name>
-  <description>This is the best app ever.</description>
-  <author email="info@myapp.com" href="http://www.myapp.com">Amazing App Team</author>
+  <name>inTime</name>
+  <description>inTime Musician's Practice Shceduler</description>
   <preference name="phonegap-version" value="cli-6.3.0" />
   <preference name="permissions" value="none" />
   <preference name="orientation" value="portrait" />
