@@ -1,0 +1,96 @@
+h5{
+  text-align:center;
+  margin-top: 0px;
+}
+
+#metronome{
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 50%;
+  background-color: #1A2930;
+  height: 122px;
+  position: absolute;
+  top:25%;
+}
+
+#tuner{
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 50%;
+  background-color: #1A2930;
+  height: 122px;
+  position: absolute;
+  top:25%;
+}
+
+.overlay{
+  position:fixed;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  background:rgba(0,0,0,0.85);
+  display:none;
+}
+
+#selectContainer{
+  width: 50%;
+  margin-left:25%;
+  margin-right:50%;
+  margin-bottom:10px;
+}
+
+#noteSelect{
+  width: 80%;
+  color: black;
+  border-radius:5px;
+}
+
+.disabled {
+  color: #999;
+}
+#metronomeButtons{
+  bottom:4px;
+
+}
+
+.buttonContainer{
+  /*width: 50%;
+  margin-left:25%;
+  margin-right:50%;*/
+  position: absolute;
+  bottom: 10px;
+  margin-left:37.5%;
+}
+
+
+.mainButton {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.mainButton{
+  background-color: #333;
+  border: none;
+  border-radius:10px;
+  color:white;
+}
+
+.mainButton:hover{
+  background-color: #111;
+}
+
+p{
+  padding: 0px;
+  clear: none;
+  display: inline;
+  margin: 0px;
+}
