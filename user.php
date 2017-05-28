@@ -3,7 +3,7 @@
 <head>
   <link rel="stylesheet" href="style/main.css">
   <link rel="stylesheet" href="style/user.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="resources/jquery.min.js"></script>
   <script src = "resources/bootstrap.min.js"></script>
   <link href="resources/bootstrap.min.css" rel="stylesheet"></script>
   <link rel="stylesheet" href="resources/bootstrapValidator.min.css"/>
