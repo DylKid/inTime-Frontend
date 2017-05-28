@@ -6,36 +6,11 @@ $(document).ready(function(){
     window.open("index.html","_self",false);
   }
   $("#user_email").append(user_email);
-  /*$.ajax({
-    method: "POST",
-    url: "backend/getEmail.php",
-    success: function(response){
-      console.log("got response from check login:" + response);
-      if(response=="NOPE"){
-        console.log("got nope");
-        window.open("index.html", "_self",false);
-      } else {
-        user_email = response.trim();
-      }
-    },
-    async: false,
-  });*/
   $("#welcome").append("Logged in as " +user_email);
 
   $("#logout").click(function(){
     sessionStorage.removeItem("user_email");
     window.open("index.html","_self",false);
-    /*console.log("logout clicked")
-    $.ajax({
-      method: "POST",
-      url: "backend/logout.php",
-      success: function(response){
-        if(response=="OK"){
-          window.open("index.html","_self",false);
-        }
-      },
-      async: true,
-    });*/
   });
   //Page Setup----------------------------------------------------------------//
 
@@ -104,7 +79,7 @@ $(document).ready(function(){
       console.log("time object");
       console.log(timeObj);
     },
-    async: true,
+    async: false,
   });
 
   var taskCount = {};
@@ -132,7 +107,7 @@ $(document).ready(function(){
       console.log("taskCount object:")
       console.log(taskCount);
     },
-    async: true,
+    async: false,
   });
 
 
@@ -185,14 +160,13 @@ $(document).ready(function(){
       console.log("timespent:");
       console.log(timeSpent);
       //Get number of days running and display it in #noDaysRunning
-
-
     },
-    async: true
+    async: false
   });
 
   //-----------------------Get visualizations data----------------------------//
 
+//
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawDayTimeChart);
   google.charts.setOnLoadCallback(drawTaskCountChart);

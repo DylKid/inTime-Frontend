@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <?php
   session_start();
-  /*echo $_SESSION["test"];
-  echo $_SESSION['user_session'];
-  echo $_SESSION["index"];
-  echo $_SESSION["user_email"];*/
 ?>
 <html>
 <head>
@@ -139,7 +135,6 @@
 </body>
 <!-- Schedule View -->
 
-
 <div id="overlay">
   <!-- Edit Task List and View Task List -->
   <div id="editTaskList" class="editTaskListDesktop">
@@ -158,7 +153,6 @@
     <div id="tasks">
     </div>
   </div>
-  <!-- Edit Task List and View Task List -->
 
   <!-- Edit/New Task -->
   <div id = "editAddTask" style="overflow-y:scroll">
@@ -175,9 +169,7 @@
         <input type="text" class="form-control" name="timeRequired" id="timeRequiredInput" maxlength="2"/>
       </div>
     </div>
-    <!--<div id = "checkbox">
-      <label for="randomGen"><input type="checkbox" value="" name = "randomGen" id="randomGen"/>Randomly Generate Sub Tasks</label>
-</div>-->
+
     <!-- The form that's shown if random generation is selected -->
     <div id="randomForm">
       <div id = "randomStart">
@@ -192,22 +184,10 @@
       </div>
     </div>
     </div>
-    <!-- The form that's shown if random generation is selected -->
-    <!--<div id = "setSubTaskForm">
-      <div class="form-group">
-        <label class = "col-md-3 control-label" for="subTasks">Sub-Tasks:</label>
-        <div class="col-md-6">
-          <textarea class="form-control" rows="5" id="subTasks"></textarea>
-        </div>
-      </div>
-    </div>-->
   </form>
-
   <button id = "editAddTaskBack"> Back </button>
   <button id = "newSubTaskButton"> New Sub-Task</button>
-  <!--<button id = "editAddTaskSave"> Save </button>-->
   </div>
-  <!-- Edit/New Task -->
 </div>
 
 <!-- Template for a task in edit task list view-->
@@ -224,9 +204,7 @@
 <div id = "subTaskTemplate" style="display:none">
   <div class = "subTask form-group">
     <label class="col-md-3 control-label subTaskLabel">
-      <!--<div class = "subTaskLabel">-->
         <div class = "editable subTaskName">Give Name</div>
-      <!--</div>-->
     </label>
     <div class="col-md-6 subTaskInput">
       <input type="text" class="form-control choicesInput" name="Name" maxlength = 100/>

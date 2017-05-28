@@ -4,7 +4,6 @@
   <link rel="stylesheet" href="style/main.css">
   <link rel="stylesheet" href="style/practice.css">
   <script src="resources/jquery.min.js"></script>
-
   <script src = "resources/bootstrap.min.js"></script>
   <link href="resources/bootstrap.min.css" rel="stylesheet"></script>
   <link rel="stylesheet" href="resources/bootstrapValidator.min.css"/>
@@ -12,10 +11,8 @@
   <script type="text/javascript" src = "js/schedule.js"></script>
   <script type="text/javascript" src = "js/mobileAdjustment.js"></script>
   <script type="text/javascript" src = "js/practice.js"></script>
-
-  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 </head>
+
 <header>
   <div>
     <h1> Practice View </h1>
@@ -23,6 +20,7 @@
   </div>
 </header>
 
+<!-- Navigation -->
 <nav>
   <div>
     <ul>
@@ -35,7 +33,6 @@
 <body id = "main">
   <div id="tasksContainer">
   </div>
-
   <button id="practiceBack">Back</button>
 </body>
 
@@ -81,7 +78,6 @@
       <button id = "tunerPlay" class = "mainButton"> Play </button>
       <button id = "tunerStop" class = "mainButton"> Stop </button>
     </div>
-
   </div>
 </div>
 

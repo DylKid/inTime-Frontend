@@ -6,20 +6,6 @@ $(document).ready(function(){
     window.open("index.html","_self",false);
   }
   $("#user_email").append(user_email);
-  /*$.ajax({
-    method: "POST",
-    url: "backend/getEmail.php",
-    success: function(response){
-      console.log("got response from check login:" + response);
-      if(response=="NOPE"){
-        console.log("got nope");
-        window.open("index.php", "_self",false);
-      } else {
-        user_email = response.trim();
-      }
-    },
-    async: false,
-  });*/
 
   var currentDay = sessionStorage.getItem('day');
   $("#day").append(currentDay);
@@ -73,14 +59,6 @@ $(document).ready(function(){
     currentNote.pause();
   });
 
-  /*get all the rows on the day for the user_email, if there are no previous
-  rows OR if the latest row is 6 days ago, if it's LESS than 6 days ago simply return
-  that latest row and load it up*/
-
-
-  /*$("#metronomeClick").click(function(){
-
-  });*/
   var interval;
   var metTime = 1000;
   var playing = false;
@@ -163,10 +141,7 @@ $(document).ready(function(){
     data: {"practice_info": JSON.stringify(currentPracticeObject)},
     success: function(response){
       console.log("got response getSubtasks.php:");
-      //console.log(response);
       currentSubtasks = JSON.parse(response);
-      //console.log(response);
-      //console.log(currentSubtasks);
     },
     async: false,
   });
@@ -189,11 +164,8 @@ $(document).ready(function(){
           }
         });
         if(!duplicate){
-          //console.log("adding " + newTask["task_name"]);
           currentTasks.push(newTask);
         }
-        //currentTasks.push(JSON.parse(response));
-        //console.log(response);
       },
       async: false,
     });
@@ -241,7 +213,6 @@ $(document).ready(function(){
     }
   }
 
-
   //Load previous practice routine
   if(!loadNew){
     console.log("loading a previous practice routine!");
@@ -255,14 +226,17 @@ $(document).ready(function(){
 
     var subTasks = new Array();
     $.each(currentTasks, function(index, taskObject){
-      var taskHTML = "<div id=" + taskObject["task_id"] + "> <strong>" + taskObject["task_name"] + " - " + taskObject["time_required"] + " Minutes </strong> <ul class='subtaskList'>";
+      var taskHTML = "<div id=" + taskObject["task_id"] + "> <strong>" + taskObject["task_name"]
+        + " - " + taskObject["time_required"] + " Minutes </strong> <ul class='subtaskList'>";
       var subtaskHTML = "";
       $.each(currentSubtasks,function(index, subtaskObject){
         if(subtaskObject["task_id"] === taskObject["task_id"]){
           if(subtaskObject["time_completed"] === null){
-            subtaskHTML += "<li> <input class ='subTaskCheck' type='checkbox'> </input>" + subtaskObject["subtask_name"] + "</li>";
+            subtaskHTML += "<li> <input class ='subTaskCheck' type='checkbox'> </input>"
+              + subtaskObject["subtask_name"] + "</li>";
           } else {
-            subtaskHTML += "<li> <input class ='subTaskCheck' type='checkbox' disabled=true checked> </input>" + subtaskObject["subtask_name"] + "</li>";
+            subtaskHTML += "<li> <input class ='subTaskCheck' type='checkbox' disabled=true checked> </input>"
+              + subtaskObject["subtask_name"] + "</li>";
           }
         }
       });
@@ -363,7 +337,7 @@ $(document).ready(function(){
           success: function(response){
             console.log("got response from saveSubtask.php" + response);
           },
-          async: false,
+          async: true,
         });
         subTaskHTML += "<li> <input class ='subTaskCheck' type='checkbox'> </input>" + subTask + "</li>";
       });
@@ -373,34 +347,20 @@ $(document).ready(function(){
     }
   }
   //----------------------CREATE A NEW RANDOM PRACTICE LIST-------------------//
-
-  //UPDATE THE SUBTASK["time_completed"] task for the right subtask upon completion.
   //Find the right subtask because the combination of practice_id, task_id and subtask_name is unique.
   //This is not saved into the database yet though, this should be done on the "back button" click.
-
   $(".subTaskCheck").change(function(){
     var boxChecked = $(this).is(":checked");
     var subTaskName = $(this).parent()[0].innerText.trim();
-    //console.log("subTaskName:");
-    //console.log(subTaskName.innerText);
-    //if(boxChecked){
-      //console.log(currentSubtasks);
       $.each(currentSubtasks,function(index,subTaskObject){
         //console.log(subTaskObject);
         if(subTaskObject["subtask_name"].trim() == subTaskName){
-          //console.log("here's a match!!!");
-
           if(boxChecked){
             console.log("Changing time completed of " + subTaskName);
-            //var nowDate = new Date(Date.now());
-
-
             nowDateInFormat = getDateTimeForMySQL();
             console.log("Updating");
             console.log(currentSubtasks[index]);
             currentSubtasks[index]["time_completed"] = nowDateInFormat;
-            //console.log(Date.getFullYear());
-            //subTaskObject["time_completed"] = Date.
           } else {
             currentSubtasks[index]["time_completed"] = null;
           }
@@ -416,7 +376,6 @@ $(document).ready(function(){
     console.log($("#tasksContainer").children());
 
     //Update any changes to subtasks
-    //TODO update any changes to practice (i.e. has the whole thing been completed?)
     $.each(currentSubtasks, function(index, object){
       $.ajax({
         method: "POST",
@@ -426,7 +385,7 @@ $(document).ready(function(){
           console.log("response from saveSubtask.php:");
           console.log(response);
         },
-        async: false,
+        async: true,
       })
     });
 
@@ -473,17 +432,11 @@ $(document).ready(function(){
     window.open("schedule.php","_self",false);
   });
 
-
-
   function getDateTimeForMySQL(){
-
     //Get datetime the same as the offset on the client's machine
     var nowDate = new Date();
     nowDate = nowDate - (nowDate.getTimezoneOffset() * 60000);
     nowDate = new Date(nowDate);
-
-    console.log("nowDate");
-    console.log(nowDate);
 
     function twoDigits(d){
       if(0 <= d && d < 10) return "0" + d.toString();
@@ -491,9 +444,10 @@ $(document).ready(function(){
       return d.toString();
     }
 
-    var nowDateInFormat = nowDate.getUTCFullYear() + "-" + twoDigits(1+ nowDate.getUTCMonth()) + "-" + twoDigits(nowDate.getUTCDate()) + " " + twoDigits(nowDate.getUTCHours()) + ":" + twoDigits(nowDate.getUTCMinutes()) + ":" + twoDigits(nowDate.getUTCSeconds());
-
-    console.log("returning datetime" + nowDateInFormat);
+    var nowDateInFormat = nowDate.getUTCFullYear() + "-"
+      + twoDigits(1+ nowDate.getUTCMonth()) + "-" + twoDigits(nowDate.getUTCDate()) + " "
+      + twoDigits(nowDate.getUTCHours()) + ":" + twoDigits(nowDate.getUTCMinutes())
+      + ":" + twoDigits(nowDate.getUTCSeconds());
     return nowDateInFormat;
   }
 });

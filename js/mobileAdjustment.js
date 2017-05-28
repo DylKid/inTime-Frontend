@@ -29,9 +29,7 @@ $(document).ready(function(){
       $(".chart").css("width","100%");
       $("#metronome").css("width","100%");
       $("#metronome").css("margin-left","0%");
-      $(".buttonContainer").css("margin-left","22.5%");
-
-
+      $(".oButtonContainer").css("margin-left","22.5%");
   }
 
   $("#tuner .buttonContainer").css("bottom","0px");

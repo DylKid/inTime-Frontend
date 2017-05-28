@@ -1,8 +1,7 @@
 $(document).ready(function(){
 
-
+  //Determines whether practice days are disabled
   var onlyPracticeOnDay = false;
-
 
   var daysMap = {0: "Sunday",
                 1: "Monday",
@@ -28,42 +27,8 @@ $(document).ready(function(){
   });
 
   var scheduleInfo;
-  function updateScheduleView(){
-    //$(".scheduleInfo").empty();
-    console.log("UPDATE SCHEDULE VIEW");
-    $.ajax({
-      method: "post",
-      url: "https://infs3202-w1oxm.uqcloud.net/intime/backend/getSchedule.php",
-      data: {userEmail : user_email},
-      success: function(response){
-        //console.log("Recieved response:" + response);
-        var scheduleInfo = JSON.parse(response);
-        //console.log(scheduleInfo);
-
-
-        $.each($(".scheduleInfo"),function(index,value){
-          //Enable button if it's the right day
-          if($(this).attr("id") != dayOfTheWeek && onlyPracticeOnDay){
-            $(this).find(".practice").prop("disabled","true");
-          }
-
-          $(this).find(".scheduleList").empty();
-          console.log($(this));
-          $.each(scheduleInfo[index],function(key,value){
-
-            $(".scheduleInfo").eq(index).find(".scheduleList").append("<li>" + value["task_name"] + "</li>");
-          });
-        });
-      },
-      async: false
-    });
-
-
-  }
 
   updateScheduleView();
-
-
 
   $.fn.editable.defaults.mode = 'inline';
   $(".edit").editable();
@@ -71,11 +36,8 @@ $(document).ready(function(){
   $("#taskTemplate").hide();
   $("#subTaskTemplate").hide();
   $("#editAddTask").hide();
-  //$("#randomForm").slideUp();
 
   $("#listViewBack").click(function(){
-    //If
-
     //Update database, then reload the schedule
 
     //For each select box, get the current value and put it into the array
@@ -118,22 +80,13 @@ $(document).ready(function(){
     $("body").removeClass("noscroll");
   });
 
-
-  //var sel = $(this).children().first()[0];
-  //console.log(sel);
-  //var value = sel.options[sel.selectedIndex].innerText;
-
   $(".practice").click(function(){
-    //window.sessionStorage.testVariable = "guns";
-    //Set day
-
     var day = $(this).parent().parent().parent().attr('id');
     console.log("seting day " + day);
     console.log($(this));
     console.log($(this).parent());
     sessionStorage.setItem('day', day);
     //Pass object that is all selected tasks plus choices
-    //updateUserTaskandChoices();
     var selectedScheduleTasks;
 
     //The list
@@ -164,12 +117,8 @@ $(document).ready(function(){
     //Get the tasks that are selected in a weekday
     var selectedTaskNames = new Array();
     $.each(scheduleList,function(index,selectItem){
-      //console.log("index: " + index + " object:");
-      console.log("pushing to selectedTaskNames:" + selectItem.innerText);
       selectedTaskNames.push(selectItem.innerText);
-
     });
-
 
     //Get the actual task objects associated with those names
     var selectedUserTasks = new Array();
@@ -183,7 +132,6 @@ $(document).ready(function(){
           method: "POST",
           url: "https://infs3202-w1oxm.uqcloud.net/intime/backend/getChoices.php",
           success: function(response){
-            //console.log("got response " + response);
             selectedUserTasksWithChoices.push(JSON.parse(response));
           },
           data : {"taskName": object["task_name"],
@@ -194,15 +142,13 @@ $(document).ready(function(){
         selectedUserTasks.push(object);
       }
     });
-
-    console.log(selectedUserTasks);
-    console.log(selectedUserTasksWithChoices);
-
     sessionStorage.setItem("selectedTasks", JSON.stringify(selectedUserTasks));
     sessionStorage.setItem("selectedTasksWithChoices", JSON.stringify(selectedUserTasksWithChoices));
+
     console.log("SENDING OVER");
     console.log(selectedUserTasks);
     console.log(selectedUserTasksWithChoices);
+
     window.open("practice.php","_self",false);
   });
   //--------------------Schedule view----------------------------------------//
@@ -232,15 +178,10 @@ $(document).ready(function(){
     if(size>=10){
       alert("A practice list is made up of a maximum of 10 tasks");
     } else {
-      //if($("#taskBox").children(){
-
-      //}
       $("#taskTemplate").children().clone(true).appendTo("#taskBox");
       updateViewTaskList();
     }
   });
-
-
 
   $(".mySelect").change(function(){
     console.log("changed");
@@ -252,16 +193,10 @@ $(document).ready(function(){
   $(".scheduleInfo .editList").click(function(){
 
     //GET ALL OF THE TASK IDS ASSOCIATED WITH THE CURRENT LOGGED IN USER
-    //console.log("The click");
-    //console.log($(this).parent().attr('id'));
     currentDay = $(this).parent().parent().parent().attr('id');
-    //console.log($(this).prev().children(".scheduleList").children());
-
 
     //GET THE TASKS IN THE SCHEDULE VIEW
    taskListElements = $(this).parent().parent().find(".scheduleList").children();
-
-  //  console.log(taskListElements);
 
     function updateEditTaskList(){
       var dayTaskList = new Array();
@@ -276,20 +211,12 @@ $(document).ready(function(){
       });
 
       $.each(taskListElements,function(index,htmlElement){
-
         var value = htmlElement.innerText;
         console.log("value:" + htmlElement.innerText + ":");
         var newTask = $("#taskTemplate").children().clone(true);
         var newSelectBox = $(newTask).children(".mySelect");
-        //console.log(newSelectBox);
-        //console.log("newSelectBoxVal:" + newSelectBox.val());
-        //console.log(newSelectBox[0]);
         newTask.appendTo("#taskBox");
-        //console.log("newSelectBoxVal2:" + newSelectBox.val());
-
-        //console.log("Updating newSelectBox with" + value);
         newSelectBox.val(value);
-
       });
     }
 
@@ -304,12 +231,13 @@ $(document).ready(function(){
   $(".removeTask").click(function(){
     //Remove from database
     var sel = $(this).prev().prev()[0];
-
     var selOptions = sel.options
     var value = null
+
     if(sel.options != null && sel.options.length > 0){
       var value = sel.options[sel.selectedIndex].innerText;
     }
+
     $.ajax({
         method: "POST",
         url: "https://infs3202-w1oxm.uqcloud.net/intime/backend/removeTask.php",
@@ -321,7 +249,6 @@ $(document).ready(function(){
         },
         async:false,
     });
-
 
     $(this).parent().remove();
     updateViewTaskList();
@@ -346,7 +273,7 @@ $(document).ready(function(){
     taskInfo["random_gen"] = 1;
     taskInfo["isNewTask"] = true;
     var taskID;
-    //Create task with new ID and dummy information\
+    //Create task with new ID and dummy information
     console.log("--------THIS IS THE USER EMAIL:" + user_email);
     $.ajax({
       method: "post",
@@ -475,7 +402,6 @@ $(document).ready(function(){
     $(".edit").editable();
     $("newNameOverlay").slideDown();
     var newSubTask = $("#subTaskTemplate").children().clone(true);
-    //$(newTask).append("<div class='choice_id' style='display:none'>"+24+"</div>");
 
     //Send a new choice to the database with the name "Give Name"
     //Get back the new choice_id and append it to the newTask
@@ -501,8 +427,8 @@ $(document).ready(function(){
     $("#subTaskInputs").append(newSubTask);
   });
 
-  //TODO REFACTOR AND FIX
 
+  //--------------CUSTOM EDITABLE-----------------------------------------------
   function divClicked(event, isNew) {
     var divHtml = $(this).html();
     var editableText = $("<textarea class='editArea' style='color:black'/>");
@@ -549,13 +475,6 @@ $(document).ready(function(){
       viewableText.click(divClicked);
   }
 
-
-  $('.editArea').keypress(function(e) {
-    console.log("keypress");
-
-});
-
-
   $(".editable").click({isNew:false},divClicked);
 
   $("#editAddTaskBack").click(function(){
@@ -573,7 +492,7 @@ $(document).ready(function(){
       alert("Time required cannot be empty");
       return;
     }
-    //TODO put limits on taskNameInput max, and timeRequired max
+
     console.log("subtasks------------------------------------");
     var noOfChoices = 0;
     var numCombs = 1;
@@ -594,7 +513,6 @@ $(document).ready(function(){
                   + "For example: Major, Minor, Dorian, Ionian");
             error = true;
           }
-
 
           //the new number of choices
           var subTasksArr = subtaskChoices.split(",");
@@ -632,7 +550,7 @@ $(document).ready(function(){
       return;
     }
 
-
+    //If no error in the form, load it up
     if(!error){
       if($("#taskNameInput").val()=="Give Task Name"){
         console.log("Delete");
@@ -658,34 +576,8 @@ $(document).ready(function(){
     }
   });
 
-  function factorial(n){
-    if (n == 0){
-      return 1;
-    } else {
-      return n * factorial(n-1);
-    }
-  }
-
   $('#timeRequiredInput').keyup(AllowOnlyNumber).blur(AllowOnlyNumber);
-
-  function AllowOnlyNumber() {
-    var v = $(this).val();
-    var no_nonnumerals = v.replace(/[^0-9]/g, '');
-    $(this).val(no_nonnumerals);
-  }
-
   //-------------------EDIT ADD TASK -----------------------------------------//
-
-  function updateSelectedIndexes(){
-    //Store stored tasks
-    selectedIndexes = new Array();
-    console.log("selectedIndexes:");
-    $("#taskBox .task").each(function(){
-      var sel = $(this).children().first()[0];
-      var selIndex = sel.selectedIndex;
-      selectedIndexes.push(selIndex);
-    });
-  }
 
   function resetTaskBoxes(){
     updateUserTaskandChoices();
@@ -704,10 +596,7 @@ $(document).ready(function(){
     console.log("---for each task box---");
     var i =0;
     $("#taskBox .task").each(function(){
-      //console.log($(this).children(".mySelect"));
       console.log(selectedIndexes);
-      //console.log("index:" + i + " has selectedIndex:"+selectedIndexes[i]);
-      //$(this).children(".mySelect").val('2');
       var val = null;
       var value = null;
       if(selectedIndexes!=null && selectedIndexes.length >0){
@@ -733,12 +622,6 @@ function updateViewTaskList(refreshSelectOptions){
     console.log("-------------updating task list---------------");
     updateUserTaskandChoices();
     //Updates the select boxes
-    /*if(refreshSelectOptions){
-      $(".mySelect").empty();
-      $.each(tasksWithChoices, function(val,text){
-        $(".mySelect").append(new Option(val,val));
-      });
-    }*/
 
     $("#tasks").empty();
     var selectedTasks = new Array();
@@ -763,17 +646,12 @@ function updateViewTaskList(refreshSelectOptions){
       //"Scales"
       var app = "<p><strong>" + value + "</p></strong>";
       app += "<ul>";
-      //console.log(realUserTasks[value]);
       //For each task that the user has defined ever
-      //console.log(value);
-      //console.log(tasksWithChoices[value]);
       $.each(tasksWithChoices[value], function(key,value){
         //Don't upload choice id.
         if(key=="choice_id"){
           return;
         }
-        //console.log(key);
-        //console.log(value);
         //"Keys:"
         app += "<li> <strong>" + key + ": " + " </strong>";
         //A, Ab, B, Bb...
@@ -887,7 +765,7 @@ function updateViewTaskList(refreshSelectOptions){
             return;
           }
         },
-        async: false,
+        async: true,
       });
     }
 
@@ -895,7 +773,7 @@ function updateViewTaskList(refreshSelectOptions){
       return;
     }
 
-    //Send the info
+  //Send the info
   $.ajax({
       type: "POST",
       url: "https://infs3202-w1oxm.uqcloud.net/intime/backend/saveTask.php",
@@ -906,17 +784,66 @@ function updateViewTaskList(refreshSelectOptions){
       success: function(response){
         //console.log("Got response from saveTask.php: " + response);
       },
-      async:false,
+      async:true,
+    });
+  }
+  //Loads information into the schedule view based on the database
+  function updateScheduleView(){
+  //  console.log("UPDATE SCHEDULE VIEW");
+    $.ajax({
+      method: "post",
+      url: "https://infs3202-w1oxm.uqcloud.net/intime/backend/getSchedule.php",
+      data: {userEmail : user_email},
+      success: function(response){
+        //console.log("Recieved response:" + response);
+        var scheduleInfo = JSON.parse(response);
+        $.each($(".scheduleInfo"),function(index,value){
+          //Enable button if it's the right day
+          if($(this).attr("id") != dayOfTheWeek && onlyPracticeOnDay){
+            $(this).find(".practice").prop("disabled","true");
+          }
+          $(this).find(".scheduleList").empty();
+          $.each(scheduleInfo[index],function(key,value){
+
+            $(".scheduleInfo").eq(index).find(".scheduleList").append("<li>" + value["task_name"] + "</li>");
+          });
+        });
+      },
+      async: false
     });
   }
 
-  function getDayOfTheWeek(){
+  function updateSelectedIndexes(){
+    //Store stored tasks
+    selectedIndexes = new Array();
+    console.log("selectedIndexes:");
+    $("#taskBox .task").each(function(){
+      var sel = $(this).children().first()[0];
+      var selIndex = sel.selectedIndex;
+      selectedIndexes.push(selIndex);
+    });
+  }
 
+  function AllowOnlyNumber() {
+    var v = $(this).val();
+    var no_nonnumerals = v.replace(/[^0-9]/g, '');
+    $(this).val(no_nonnumerals);
+  }
+
+  function getDayOfTheWeek(){
     //Get datetime the same as the offset on the client's machine
     var nowDate = new Date();
     nowDate = nowDate - (nowDate.getTimezoneOffset() * 60000);
     nowDate = new Date(nowDate);
-
     return nowDate.getDay();
+  }
+
+  //Computes factorial, apparently nothing in javascript could sort me out
+  function factorial(n){
+    if (n == 0){
+      return 1;
+    } else {
+      return n * factorial(n-1);
+    }
   }
 });

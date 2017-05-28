@@ -11,11 +11,8 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src = "js/schedule.js"></script>
   <script type="text/javascript" src = "js/user.js"></script>
-  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
   <script src="js/mobileAdjustment.js"></script>
 </head>
-
 
 <header>
   <h1> User View </h1>
@@ -45,11 +42,7 @@
   <section id = "charts2" class = "chartContainer">
     <div class = "chart" id = "day_time_chart"></div>
     <div class = "chart" id = "task_count_chart"></div>
-
-    <!--</div>-->
   </section>
-
-
 
 </body>
 </html>
