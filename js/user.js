@@ -31,7 +31,7 @@ $(document).ready(function(){
       $.each(practiceObjects, function(index, pracObj){
         var pracTime = new Date(pracObj["time_completed"]).getTime();
         var hoursDiff = (currDate-pracTime)/3600000;
-        if(hoursDiff < 24){
+        if(hoursDiff < 48){
           noDaysRunning++;
           currDate = pracTime;
         } else {
